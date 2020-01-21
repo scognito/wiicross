@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="0.1">
+  <name>Piero's Wiicross</name>
+  <coder>Scognito</coder>
+  <version>v0.1</version>
+  <release_date>200810300000</release_date>
+  <short_description>A picross game for Wii</short_description>
+  <long_description>Color the blocks according to numbers given at the side of the grid to reveal a hidden picture.</long_description>
+</app>
+

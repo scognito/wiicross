@@ -1,0 +1,9 @@
+K 10
+svn:ignore
+V 63
+Windows Mobile 5.0 Pocket PC SDK (ARMV4I)
+Debug
+Release
+*.user
+
+END

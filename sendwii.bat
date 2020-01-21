@@ -1,0 +1,1 @@
+wiiload.exe wiicross.dol
