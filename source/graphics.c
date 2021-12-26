@@ -317,7 +317,7 @@ void drawScene(){
 	//printText(20, 20, succa);
 	
 	//if(pointerVisible)
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	if(options.padType == PAD_WII)
 		drawSprite(pointer);
 	#endif
@@ -730,7 +730,7 @@ bool helpNeeded(int whichLevel){
 			buttonsDown = PAD_ButtonsDown(0);
 			
 			if( ((buttonsDown & PAD_BUTTON_A || buttonsDown & PAD_BUTTON_START))
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				||
 				((wpads[0]->btns_d & WPAD_BUTTON_A) || (wpads[0]->btns_d & WPAD_BUTTON_1) || (wpads[0]->btns_d & WPAD_BUTTON_2))
 				#endif
@@ -741,7 +741,7 @@ bool helpNeeded(int whichLevel){
 			}
 			
 			else if( (((buttonsDown & PAD_BUTTON_RIGHT))
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				||
 				((wpads[0]->btns_d & WPAD_BUTTON_DOWN))
 				#endif
@@ -751,7 +751,7 @@ bool helpNeeded(int whichLevel){
 			}
 			
 			else if( (((buttonsDown & PAD_BUTTON_LEFT))
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				||
 				((wpads[0]->btns_d & WPAD_BUTTON_UP))
 				#endif
@@ -847,7 +847,7 @@ bool helpNeeded(int whichLevel){
 		drawSprite(button_no);
 		drawSprite(needhelp);
 		updateWiimote();
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		drawSprite(cursor_hand);
 		#endif
 		

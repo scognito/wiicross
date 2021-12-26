@@ -170,7 +170,7 @@ int levelSelect(){
 		buttonsDown = PAD_ButtonsDown(0);
 		
 		if(((buttonsDown & PAD_TRIGGER_R)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_PLUS)
 		#endif
@@ -203,7 +203,7 @@ int levelSelect(){
 			*/
 		
 		if(((buttonsDown & PAD_TRIGGER_L)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_MINUS)
 		#endif
@@ -216,7 +216,7 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_RIGHT)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_DOWN)
 		#endif
@@ -226,7 +226,7 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_LEFT)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_UP)
 		#endif
@@ -238,7 +238,7 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_DOWN)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_LEFT)
 		#endif
@@ -248,7 +248,7 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_UP)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_RIGHT)
 		#endif
@@ -260,7 +260,7 @@ int levelSelect(){
 		}
 		
 		else if( (buttonsDown & PAD_BUTTON_A)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		|| ((wpads[0]->btns_d & WPAD_BUTTON_1) || (wpads[0]->btns_d & WPAD_BUTTON_2))
 		#endif
 		){
@@ -272,14 +272,14 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_START)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		|| (wpads[0]->btns_d & WPAD_BUTTON_HOME)
 		#endif
 		){
 			pauseScreen();
 		}
 		
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		else if(wpads[0]->btns_d & WPAD_BUTTON_A){
 		
 			if((px > 545 || px < 92) && !isOT){
@@ -317,7 +317,7 @@ int levelSelect(){
 		// DEBUG
 		//
 		/*
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		if(wpads[0]->btns_d & WPAD_BUTTON_HOME)
 			exit=true;
 		if(buttonsDown & PAD_BUTTON_X)
@@ -343,7 +343,7 @@ int levelSelect(){
 			frames = 0;
 		
 		//drawLevelSelectCursor(startX -2 + (preview.w + xDistance)*posX, startY -2 + (preview.h + yDistance)*posY);
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		drawSprite(cursor_hand);
 		#endif
 		
@@ -374,7 +374,7 @@ int levelSelect(){
 
 bool moveCursorPointer(int* posX, int* posY){
 
-	#ifndef MAKE_WII
+	#ifndef HW_RVL
 		return false;
 	#endif
 	

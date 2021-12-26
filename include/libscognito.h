@@ -19,7 +19,7 @@
 #define FMT_PNG 1
 
 //#define IS_EMU
-#define MAKE_WII
+#define HW_RVL
 
 extern GXRModeObj *vmode;
 extern u32 *xfb[2];

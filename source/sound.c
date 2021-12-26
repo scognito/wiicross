@@ -83,7 +83,7 @@ void playOggMusic(){
 	return;
 	#endif
 	
-	#ifndef MAKE_WII
+	#ifndef HW_RVL
 	return;
 	#endif
 	

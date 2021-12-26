@@ -20,7 +20,7 @@ void creditScreen(){
 		
 		drawBackground(bg_creditScreen);
 		drawSprite(back);
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		drawSprite(cursor_hand);
 		#endif
 		
@@ -40,7 +40,7 @@ void checkInput_CS(){
 	int buttonsDown = PAD_ButtonsDown(0);
 	
 	if((buttonsDown & PAD_BUTTON_A)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		((wpads[0]->btns_d & WPAD_BUTTON_1) || (wpads[0]->btns_d & WPAD_BUTTON_2) || (wpads[0]->btns_d & WPAD_BUTTON_A) || (wpads[0]->btns_d & WPAD_BUTTON_B))
 		#endif

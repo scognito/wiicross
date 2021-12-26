@@ -33,7 +33,7 @@
 #define HELD_FRAMES_MAX 20
 #define HELD_FRAMES_STEP 6//10
 
-#ifdef MAKE_WII
+#ifdef HW_RVL
 #define DIR_ROOT   ""
 #else
 #define DIR_ROOT   "/"
