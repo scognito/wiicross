@@ -10,12 +10,12 @@ char error[1000];
 
 void initStorage(){
 	
-	if(!fatInitDefault()){
+	//if(!fatInitDefault()){
 		sprintf(error, "failed fat init default: %s", strerror(errno));
 		//breakpoint(error, errno);
 		//breakpoint("failed fat init default ", errno);
 		return;
-	}
+	/*}
 	
 	DIR_ITER* dir = diropen(DIR_ROOT "res/"); 
 	if (dir == NULL) {
@@ -31,7 +31,7 @@ void initStorage(){
 	if(!readSD(FILE_OPTIONS))
 		writeSD(FILE_OPTIONS);
 	
-	return;
+	return;*/
 }
 
 int writeSD(int file){
