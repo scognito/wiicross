@@ -80,7 +80,7 @@ void initWii() {
 
 	VIDEO_Init();
 	PAD_Init();
-	#ifdef HW_RVL
+	#ifndef HW_DOL
 	WPAD_Init();
 	#endif
 	
@@ -103,11 +103,11 @@ void initWii() {
 	if(vmode->viTVMode&VI_NON_INTERLACE)
 		VIDEO_WaitVSync();
 	
-	#ifdef HW_RVL
+#ifndef HW_DOL
 	WPAD_SetVRes(WPAD_CHAN_0, vmode->fbWidth, vmode->xfbHeight);
 	WPAD_SetDataFormat(WPAD_CHAN_0, WPAD_FMT_BTNS_ACC_IR);
 	WPAD_SetIdleTimeout(60);
-	#endif
+#endif
 	
 	// random stuff
 	srand(time(NULL));

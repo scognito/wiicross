@@ -802,7 +802,7 @@ void performLevelComplete(){
 
 void updateWiimote(){
 	
-	#ifdef HW_RVL
+#ifndef HW_DOL
 	
 	WPAD_ReadPending(WPAD_CHAN_0, NULL);
 	wpads[0] = WPAD_Data(WPAD_CHAN_0);
