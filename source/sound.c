@@ -9,8 +9,8 @@ void initSound(){
 	return;
 	#endif
 
-	SND_Init(INIT_RATE_48000);
-	MODPlay_Init(&mod_track);
+	//SND_Init(INIT_RATE_48000);
+	//MODPlay_Init(&mod_track);
 	
 	song.totalSongs = loadCustomSongs();
 	shuffle(song.totalSongs);
@@ -25,7 +25,7 @@ void playDefaultLevelMusic(){
 
 	int rand;
 	rand = getRandomNum(0, 1);
-	
+	/*
 	if(rand == 0){
 		if(MODPlay_SetMOD(&mod_track, snd_bg0_mod ) < 0 ){
 			MODPlay_Unload(&mod_track);
@@ -43,7 +43,7 @@ void playDefaultLevelMusic(){
 			MODPlay_SetVolume(&mod_track, 64,64);
 			MODPlay_Start(&mod_track); // Play the MOD
 		}
-	}
+	}*/
 }
 
 void playTitleScreenMusic(){
@@ -56,7 +56,7 @@ void playTitleScreenMusic(){
 		StopOgg();
 	}
 	
-	SND_Pause(0); // the sound loop is running now
+	/*SND_Pause(0); // the sound loop is running now
 
 	if(MODPlay_SetMOD(&mod_track, snd_titlescreen_mod ) < 0 ){
 		MODPlay_Unload(&mod_track);
@@ -64,7 +64,7 @@ void playTitleScreenMusic(){
 	else{
 		MODPlay_SetVolume(&mod_track, 64,64);
 		MODPlay_Start(&mod_track);
-	}
+	}*/
 }
 
 void playLevelCleared(){
@@ -73,7 +73,7 @@ void playLevelCleared(){
 	return;
 	#endif
 	
-	PlayOgg(mem_open((char*)snd_levelcleared_ogg, snd_levelcleared_ogg_size), 0, OGG_ONE_TIME);
+	//PlayOgg(mem_open((char*)snd_levelcleared_ogg, snd_levelcleared_ogg_size), 0, OGG_ONE_TIME);
 	//SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_levelcleared_raw, snd_click_raw_size, 255, 255, NULL);
 }
 
@@ -102,11 +102,11 @@ void playOggMusic(){
 		return;
 	}
 
-	PlayOgg(fd, 0, OGG_ONE_TIME);
+	//PlayOgg(fd, 0, OGG_ONE_TIME);
 }
 
 int loadCustomSongs(){
-
+/*
 	struct stat st;
 	char filename[MAXNAMLEN];
 	
@@ -131,20 +131,21 @@ int loadCustomSongs(){
 	
 	dirclose(dir);
 	
-	return i;
+	return i;*/
+	return 0;
 }
 
 void playClick(){
-	SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_click_raw, snd_click_raw_size, 255, 255, NULL);
+	//SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_click_raw, snd_click_raw_size, 255, 255, NULL);
 }
 
 void playError(){
-	SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_error_raw, snd_click_raw_size, 255, 255, NULL);
+	//SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_error_raw, snd_click_raw_size, 255, 255, NULL);
 }
 
 void playBloop(){
 	//SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_error_raw, snd_click_raw_size, 255, 255, NULL);
-	SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_bloop_raw, snd_bloop_raw_size, 255, 255, NULL);
+	//SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_bloop_raw, snd_bloop_raw_size, 255, 255, NULL);
 }
 
 bool checkOggExt(char* s1){
