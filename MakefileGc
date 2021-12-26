@@ -34,13 +34,13 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
 #LIBS	:= -lfat -lmodplay -lmad -logc -lpng -lz -lm
-LIBS   := -lfat -lmodplay -lmad -logc -lpng -lz -lm  ../lib/libtremor.a
+LIBS   := `$(PREFIX)pkg-config libpng zlib --libs` -lasnd -lfat -lmodplay -lmad -logc -lz -lm  ../lib/libtremor.a
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(CURDIR)
+LIBDIRS	:= $(CURDIR) $(PORTLIBS)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -98,7 +98,7 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/MakefileGc
 
 #---------------------------------------------------------------------------------
 clean:

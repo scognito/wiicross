@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 //#include <mp3player.h>
-#include "snd.h"
+#include <asndlib.h>
 #include <fat.h>
 
 #include "libscognito.h"

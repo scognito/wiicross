@@ -117,8 +117,8 @@ int readThemesDir(){
 	bool titleFound = false;
 	
 	struct stat st;
-	char filename[MAXPATHLEN];
-	char dirname[MAXPATHLEN];
+	char filename[MAXNAMLEN];
+	char dirname[MAXNAMLEN];
 	
 	char temp[1000];
 	int spriteError = 0;

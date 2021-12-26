@@ -108,7 +108,7 @@ void playOggMusic(){
 int loadCustomSongs(){
 
 	struct stat st;
-	char filename[MAXPATHLEN];
+	char filename[MAXNAMLEN];
 	
 	DIR_ITER* dir;
 	dir = diropen (DIR_ROOT "res/music");
