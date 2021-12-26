@@ -109,7 +109,8 @@ void saveCurrentLevel(){
 }
 
 int readThemesDir(){
-	
+	return 0;
+/*	
 	bool bgFound = false;
 	bool markedFound = false;
 	bool filledFound = false;
@@ -216,5 +217,6 @@ int readThemesDir(){
 	
 	dirclose(dir);
 	return themeCounter;
+	*/
 }
 
