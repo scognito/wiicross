@@ -10,20 +10,21 @@ char error[1000];
 
 void initStorage(){
 	
-	//if(!fatInitDefault()){
+	if(!fatInitDefault()){
 		sprintf(error, "failed fat init default: %s", strerror(errno));
 		//breakpoint(error, errno);
 		//breakpoint("failed fat init default ", errno);
 		return;
-	/*}
-	
-	DIR_ITER* dir = diropen(DIR_ROOT "res/"); 
+	}
+
+	DIR* dir = opendir(DIR_ROOT "res/"); 
+
 	if (dir == NULL) {
 		mkdir(DIR_ROOT "res", S_ISVTX);
-			//breakpoint("can't create res directory", errno);
+			breakpoint("can't create res directory", errno);
 	}
 	else
-		dirclose(dir);
+		closedir(dir);
 	
 	if(!readSD(FILE_LEVELS))
 		writeSD(FILE_LEVELS);
@@ -31,7 +32,7 @@ void initStorage(){
 	if(!readSD(FILE_OPTIONS))
 		writeSD(FILE_OPTIONS);
 	
-	return;*/
+	return;
 }
 
 int writeSD(int file){
@@ -110,13 +111,15 @@ void saveCurrentLevel(){
 
 int readThemesDir(){
 	return 0;
-/*	
+	
 	bool bgFound = false;
 	bool markedFound = false;
 	bool filledFound = false;
 	bool lCompleteFound = false;
 	bool titleFound = false;
-	
+
+	struct dirent *pent;
+	struct dirent *pent_inner;
 	struct stat st;
 	char filename[MAXNAMLEN];
 	char dirname[MAXNAMLEN];
@@ -124,10 +127,10 @@ int readThemesDir(){
 	char temp[1000];
 	int spriteError = 0;
 	
-	DIR_ITER* dir;
-	DIR_ITER* themeDir;
+	DIR* dir;
+	DIR* themeDir;
 
-	dir = diropen (DIR_ROOT "res/themes");
+	dir = opendir(DIR_ROOT "res/themes");
 	
 	int themeCounter = 0;
 	sprintf(theme.themesArray[themeCounter], "default");
@@ -145,16 +148,18 @@ int readThemesDir(){
 	
 	if(dir == NULL) {
 		//breakpoint("Unable to generic theme the directory.", errno);
-		dirclose(dir);
+		closedir(dir);
 		return themeCounter;
 		//return -1;
 	}
-	
-	while (dirnext(dir, temp, &st) == 0){
-		
+
+	while ((pent=readdir(dir)) != NULL){
+		stat(pent->d_name, &st);
 		// is it a directory and it is not . nor ..?
-		if((strlen(temp)>2) && (st.st_mode & S_IFDIR)){
-					
+		if(
+			(pent->d_name != NULL && strlen(pent->d_name) > 2)
+			&& (st.st_mode & S_IFDIR))
+		{		
 			// we found first (supposed) theme dir
 			sprintf(dirname, DIR_ROOT "res/themes/%s", temp);
 			themeDir = diropen (dirname);
@@ -171,8 +176,8 @@ int readThemesDir(){
 			titleFound = false;
 			
 			// we are IN the first (supposed) theme dir
-			while (dirnext(themeDir, filename, &st) == 0){
-								
+			while ((pent_inner = readdir(themeDir)) != NULL){
+				strncpy(filename, pent_inner->d_name, MAXNAMLEN);
 				if((strlen(filename)>2) && (st.st_mode == 33206)){
 
 					if(strcasecmp(filename, "bg.png") == 0){
@@ -211,12 +216,11 @@ int readThemesDir(){
 				}
 			}
 			
-			dirclose(themeDir);
+			closedir(themeDir);
 		}
 	}
 	
-	dirclose(dir);
+	closedir(dir);
 	return themeCounter;
-	*/
 }
 
