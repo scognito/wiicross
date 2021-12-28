@@ -25,7 +25,7 @@ THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "oggplayer.h"
-
+#include <gctypes.h>
 #include <gccore.h>
 
 /* OGG control */
@@ -67,7 +67,7 @@ static lwp_t h_oggplayer;
 static int ogg_thread_running=0;
 
 static void ogg_add_callback(int voice)
-{/*
+{
 if(ogg_thread_running<=0) {SND_StopVoice(0);return;}
 
 if(private_ogg.flag & 128) return; // Ogg is paused
@@ -81,11 +81,11 @@ else
 	{
 	if(private_ogg.flag & 64) {private_ogg.flag&=~64;LWP_ThreadSignal(oggplayer_queue);} 
 	}
-*/}
+}
 
 static void * ogg_player_thread(private_data_ogg * priv)
 {
-/*
+
 int first_time=1;
 
 
@@ -128,17 +128,17 @@ while(!priv[0].eof){
       
 	  if(priv[0].seek_time>=0) {ov_time_seek(&priv[0].vf,priv[0].seek_time); priv[0].seek_time=-1;}
 
-	  ret=ov_read(&priv[0].vf,(void *) &priv[0].pcmout[priv[0].pcmout_pos][priv[0].pcm_indx],MAX_PCMOUT,/ *0,2,1,* /&priv[0].current_section);
+	  ret=ov_read(&priv[0].vf,(void *) &priv[0].pcmout[priv[0].pcmout_pos][priv[0].pcm_indx],MAX_PCMOUT,/*0,2,1,*/&priv[0].current_section);
       priv[0].flag&=192;
 		 if (ret == 0) {
-					   / * EOF * /
+					   /* EOF */
 					   if(priv[0].mode & 1) ov_time_seek(&priv[0].vf,0); // repeat
 					   else priv[0].eof=1; // stops
 					   //
 					   } 
 		 else if (ret < 0) {
-						   / * error in the stream.  Not a problem, just reporting it in
-					          case we (the app) cares.  In this case, we don't. * /
+						   /* error in the stream.  Not a problem, just reporting it in
+					          case we (the app) cares.  In this case, we don't. */
                            if(ret!=OV_HOLE) 
 								{
 								if(priv[0].mode & 1) ov_time_seek(&priv[0].vf,0); // repeat
@@ -146,8 +146,8 @@ while(!priv[0].eof){
 								}
 						   } 
 		 else {
-			   / * we don't bother dealing with sample rate changes, etc, but
-			    you'll have to* /
+			   /* we don't bother dealing with sample rate changes, etc, but
+			    you'll have to*/
 	           priv[0].pcm_indx+=ret>>1; //get 16 bits samples
 			  }
 	  }
@@ -177,13 +177,13 @@ ov_clear(&priv[0].vf);
 priv[0].fd=-1;
 priv[0].pcm_indx=0;
 ogg_thread_running=0;
-*/
+
 return 0;
 }
 
 
 void StopOgg()
-{/*
+{
 SND_StopVoice(0);
 if(ogg_thread_running>0)
 	{
@@ -192,13 +192,13 @@ if(ogg_thread_running>0)
     LWP_JoinThread(h_oggplayer,NULL);
 
 	while(((volatile int )ogg_thread_running)!=0) {;;;}
-	}*/
+	}
 }
 
 
 int PlayOgg(int fd, int time_pos, int mode)
 {
-/*
+
 StopOgg();
 
 ogg_thread_running=0;
@@ -232,14 +232,14 @@ if(LWP_CreateThread(&h_oggplayer,(void *) ogg_player_thread,&private_ogg,oggplay
 	return -1;
 	}
 LWP_ThreadSignal(oggplayer_queue);
-while(((volatile int )ogg_thread_running)==0) {;;;}*/
+while(((volatile int )ogg_thread_running)==0) {;;;}
 return 0;
 }
 
 
 void PauseOgg(int pause)
 {
-/*
+
 if(pause)
 	{
 	private_ogg.flag|=128;
@@ -255,24 +255,24 @@ else
 								   }
 							   }
 
-	}*/
+	}
 }
 
 int StatusOgg()
 {
-	/*
+	
 if(ogg_thread_running<=0) return -1;  // Error
 
 if(private_ogg.eof)      return 255; // EOF
 
 if(private_ogg.flag & 128) return 2; // paused
-*/
+
 return 1; // running
 }
 
 void SetVolumeOgg(int volume)
 {
-/*
+
 private_ogg.volume=volume;
 
 SND_ChangeVolumeVoice(0, volume, volume);
@@ -286,13 +286,13 @@ if(private_ogg.fd<0) return 0;
 ret=((s32) ov_time_tell(&private_ogg.vf));
 if(ret<0) ret=0;
 
-return ret;*/
+return ret;
 }
 
 void SetTimeOgg(s32 time_pos)
 {
-/*
+
 if(time_pos>=0) private_ogg.seek_time=time_pos;
-*/
+
 }
 
