@@ -146,7 +146,6 @@ void playError(){
 }
 
 void playBloop(){
-	SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_error_raw, snd_click_raw_size, 255, 255, NULL);
 	SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_bloop_raw, snd_bloop_raw_size, 255, 255, NULL);
 }
 
