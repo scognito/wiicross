@@ -160,10 +160,9 @@ int readThemesDir(){
 			(pent->d_name != NULL && strlen(pent->d_name) > 2)
 			&& (st.st_mode & S_IFDIR))
 		{		
-// FIXME: change occurance of temp to pent->d_name
 // FIXME: Swap occurances of sprintf for snprintf for safety.
 			// we found first (supposed) theme dir
-			sprintf(dirname, DIR_ROOT "res/themes/%s", temp);
+			sprintf(dirname, DIR_ROOT "res/themes/%s", pent->d_name);
 			themeDir = diropen (dirname);
 			
 			if(themeDir == NULL){
@@ -207,7 +206,7 @@ int readThemesDir(){
 			//0 false, 1 true		
 			if(bgFound & markedFound & filledFound & lCompleteFound & titleFound){
 				if(themeCounter < 255){		
-					sprintf(theme.themesArray[themeCounter], temp);
+					sprintf(theme.themesArray[themeCounter], pent->d_name);
 					sprintf(temp, DIR_ROOT "res/themes/%s/title.png", theme.themesArray[themeCounter]);
 					spriteError = createSprite(&theme.titleArray[themeCounter], NULL, temp, 508, 263, 1, FMT_PNG, true);
 					
