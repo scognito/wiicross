@@ -160,6 +160,8 @@ int readThemesDir(){
 			(pent->d_name != NULL && strlen(pent->d_name) > 2)
 			&& (st.st_mode & S_IFDIR))
 		{		
+// FIXME: change occurance of temp to pent->d_name
+// FIXME: Swap occurances of sprintf for snprintf for safety.
 			// we found first (supposed) theme dir
 			sprintf(dirname, DIR_ROOT "res/themes/%s", temp);
 			themeDir = diropen (dirname);
