@@ -33,7 +33,7 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,--allow-multiple-definition,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS   := `$(PREFIX)pkg-config libpng zlib --libs` -lasnd -lfat -lmodplay -lmad -logc -lz -lm  ../lib/libtremor.a -laesnd
+LIBS   := `$(PREFIX)pkg-config libpng zlib --libs` -lwiiuse -lbte -lasnd -lfat -lmodplay -lmad -logc -lz -lm  ../lib/libtremor.a -laesnd
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
