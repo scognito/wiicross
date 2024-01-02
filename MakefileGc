@@ -33,7 +33,6 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-#LIBS	:= -lfat -lmodplay -lmad -logc -lpng -lz -lm
 LIBS   := `$(PREFIX)pkg-config libpng zlib --libs` -lasnd -lfat -lmodplay -lmad -logc -lz -lm  ../lib/libtremor.a -laesnd
 
 #---------------------------------------------------------------------------------
