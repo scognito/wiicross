@@ -13,7 +13,7 @@ void initSound(){
 	#endif
 
 	SND_Init(INIT_RATE_48000);
-	//MODPlay_Init(&mod_track);
+	MODPlay_Init(&mod_track);
 	
 	song.totalSongs = loadCustomSongs();
 	shuffle(song.totalSongs);
