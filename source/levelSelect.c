@@ -1,5 +1,10 @@
 #include "levelSelect.h"
 
+#ifdef HW_DOL
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#endif
+
 extern s_level leveldata[NUMLEVELS];
 extern s_marker markerH;
 extern s_time timeElapsed;
@@ -8,7 +13,7 @@ extern s_option options;
 extern bool backToMenu;
 extern s_sprite arrowR;
 extern s_sprite arrowL;
-extern int currentPage;
+extern unsigned int currentPage;
 
 extern int px, py;
 char timeStr[20];
@@ -61,7 +66,7 @@ int levelSelect(){
 	markerH.b = 255;
 	markerH.dirColor = DIR_COLOR_DOWN;
 	
-	int numPages = 0;
+	unsigned int numPages = 0;
 	
 	if (NUMLEVELS > 9)
 		numPages = NUMLEVELS / 9;
@@ -426,3 +431,6 @@ bool moveCursorPointer(int* posX, int* posY){
 	
 	return (isOTx && isOTy);
 }
+#ifdef HW_DOL
+#pragma GCC diagnostic pop
+#endif

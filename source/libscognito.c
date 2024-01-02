@@ -281,7 +281,7 @@ void deleteBackground(s_background *bg){
 
 u32 createSprite(s_sprite *sp, const u8 *bmpfile, char* path, s32 x, s32 y, u32 numFrames, u8 type, bool useDevice){
 	
-	u32 width, height, tmp;
+	u32 width = 0, height = 0, tmp = 0;
 	
 	if (type == FMT_BMP){
 	

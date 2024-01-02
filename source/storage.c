@@ -154,7 +154,7 @@ int readThemesDir(){
 		stat(pent->d_name, &st);
 		// is it a directory and it is not . nor ..?
 		if(
-			(pent->d_name != NULL && strlen(pent->d_name) > 2)
+			(strlen(pent->d_name) > 2)
 			&& (st.st_mode & S_IFDIR))
 		{		
 // FIXME: Swap occurances of sprintf for snprintf for safety.

@@ -82,7 +82,7 @@ bool newMove;
 int currentLevel;
 bool backToMenu = false;
 int firstState = STATE_NONE;
-int currentPage = 0;
+unsigned int currentPage = 0;
 extern int ox;
 extern int oy;
 
@@ -454,7 +454,6 @@ void checkInput(){
 	int buttonsHeld = PAD_ButtonsHeld(0);
 	int buttonsUp = PAD_ButtonsUp(0);
 	int px, py;
-	bool firstMove = false;
 	
 	px = pointer.x + pointer.w;
 	py = pointer.y + pointer.h;
@@ -518,12 +517,6 @@ void checkInput(){
 		(( ((wpads[0]->btns_d & WPAD_BUTTON_B) && wpads[0]->ir.valid) || ((wpads[0]->btns_h & WPAD_BUTTON_B) && wpads[0]->ir.valid) || (wpads[0]->btns_d & WPAD_BUTTON_2) || (wpads[0]->btns_h & WPAD_BUTTON_2) )&& options.padType != PAD_NGC)
 		#endif
 	){
-		//NEW
-		//if(firstState = STATE_NONE){
-		//if(firstMove = false){
-		//	firstMove = true;
-		//}
-		//ENDNEW
 		
 		if(newMove){
 			checkTile(sCursorX, sCursorY, ACTION_DRAW);
@@ -546,14 +539,12 @@ void checkInput(){
 	else if( !(buttonsDown & PAD_BUTTON_A) && !(buttonsDown & PAD_BUTTON_B) && options.padType == PAD_NGC){
 		newMove = true;
 		firstState = STATE_NONE;
-		firstMove = false;
 	}
 	
 	#ifdef HW_RVL
 	else if( !(wpads[0]->btns_d & WPAD_BUTTON_A) && !(wpads[0]->btns_d & WPAD_BUTTON_B) && options.padType != PAD_NGC){
 		newMove = true;
 		firstState = STATE_NONE;
-		firstMove = false;
 	}
 	#endif
 	

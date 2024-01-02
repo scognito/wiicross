@@ -2,6 +2,11 @@
 #include "../include/graphics.h"
 #include "../include/pauseScreen.h"
 
+#ifdef HW_DOL
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#endif
+
 bool exitPS;
 int cOptionX;
 int cOptionY;
@@ -357,3 +362,6 @@ int askSaveGame(){
 	
 	return selection;
 }
+#ifdef HW_DOL
+#pragma GCC diagnostic pop
+#endif
