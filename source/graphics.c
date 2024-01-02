@@ -15,6 +15,8 @@ int px, py;
 
 extern bool newMove;
 
+extern u32 fbsize;
+
 void initGfx(){
 
 	int spriteError = 0;
@@ -499,15 +501,15 @@ void fadeIn(){
 	int y = 0;
 	int i = 0;
 	int step = 10;
-	
-	u32 *tempXfb = malloc(sizeof(u32)*(640>>1)*480);
+		
+	u32 *tempXfb = malloc(fbsize);
 	//screenshot
-	memcpy(&tempXfb, &xfb[whichfb][0], (640<<1)*480);
+	memcpy(&tempXfb, &xfb[whichfb][0], fbsize);
 
 	for(i=0; i<11; i++){
 		whichfb ^= 1;
 		VIDEO_ClearFrameBuffer (vmode, xfb[whichfb], COLOR_BLACK);	
-		memcpy(&xfb[whichfb][0], &tempXfb, (640<<1)*480);
+		memcpy(&xfb[whichfb][0], &tempXfb, fbsize);
 		
 		for(y=0; y < 48; y++){
 			for(x=0; x < 64; x++){
@@ -536,10 +538,10 @@ void fadeOut(){
 	VIDEO_Flush();
 	VIDEO_WaitVSync();
 
-	u32 *tempXfb = malloc(sizeof(u32)*(640>>1)*480);
+	u32 *tempXfb = malloc(fbsize);
 	//screenshot
-	memcpy(&tempXfb, &xfb[whichfb][0], (640<<1)*480);
-	memcpy(&xfb[whichfb][0], &tempXfb, (640<<1)*480);
+	memcpy(&tempXfb, &xfb[whichfb][0], fbsize);
+	memcpy(&xfb[whichfb][0], &tempXfb, fbsize);
 	
 	VIDEO_Flush();
 	VIDEO_WaitVSync();
@@ -548,7 +550,7 @@ void fadeOut(){
 	
 		whichfb ^= 1;
 		VIDEO_ClearFrameBuffer (vmode, xfb[whichfb], COLOR_BLACK);	
-		memcpy(&xfb[whichfb][0], &tempXfb, (640<<1)*480);
+		memcpy(&xfb[whichfb][0], &tempXfb, fbsize);
 		
 		for(y=0; y < 48; y++){
 			for(x=0; x < 64; x++){
@@ -559,12 +561,10 @@ void fadeOut(){
 		VIDEO_SetNextFramebuffer(xfb[whichfb]);
 		VIDEO_Flush();
 		VIDEO_WaitVSync();
-		//sleepSeconds(1);
 		sleepMSeconds(20);
 	}
 	
-	//breakpoint("pre free", 0);
-	//free(&tempXfb);
+	free(tempXfb);
 }
 
 void showLevelComplete(){	
