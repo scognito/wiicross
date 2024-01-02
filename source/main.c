@@ -109,7 +109,10 @@ int main() {
 	else if(systemPowerOff)
 		SYS_ResetSystem(SYS_POWEROFF, 0, 0);
 	*/
-	
+	SYS_SetResetCallback(resetSystem);
+#ifdef HW_RVL
+	SYS_SetPowerCallback(poweroffSystem);
+#endif
 	while(1){
 
 		currentLevel = levelSelect();
