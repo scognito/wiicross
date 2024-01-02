@@ -10,7 +10,6 @@ endif
 include $(DEVKITPPC)/wii_rules
 
 
-
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
@@ -35,7 +34,7 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS   := `$(PREFIX)pkg-config libpng zlib --libs` -lwiiuse -lbte -lasnd -lfat -lmodplay -lmad -logc -lz -lm  ../lib/libtremor.a -laesnd
+LIBS   := `$(PREFIX)pkg-config libpng zlib --libs` -lwiiuse -lbte -lasnd -lfat -lmodplay -lmad -logc -lz -lm -ltremor -laesnd
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -91,13 +90,15 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 # build a list of library paths
 #---------------------------------------------------------------------------------
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib) \
-					-L$(LIBOGC_LIB)
+					-L$(LIBOGC_LIB) \
+					-L$(CURDIR)/tremor
 
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
 .PHONY: $(BUILD) clean
 
 #---------------------------------------------------------------------------------
 $(BUILD):
+	$(MAKE) -C tremor
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 #---------------------------------------------------------------------------------
@@ -172,9 +173,3 @@ $(OUTPUT).elf: $(OFILES)
 #---------------------------------------------------------------------------------
 endif
 #---------------------------------------------------------------------------------
-
-
-# tremor sub-project
-FORCE: ;
-tremor/tremorlib.a: FORCE
-	$(MAKE) -C tremor/ tremor.a
