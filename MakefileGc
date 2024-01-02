@@ -103,6 +103,7 @@ $(BUILD):
 clean:
 	@echo clean ...
 	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol
+	$(MAKE) -C tremor -f MakefileGc clean
 
 #---------------------------------------------------------------------------------
 run:
@@ -170,3 +171,9 @@ $(OUTPUT).elf: $(OFILES)
 #---------------------------------------------------------------------------------
 endif
 #---------------------------------------------------------------------------------
+
+
+# tremor sub-project
+FORCE: ;
+tremor/tremorlib.a: FORCE
+	$(MAKE) -C tremor/ -f MakefileGc tremor.a

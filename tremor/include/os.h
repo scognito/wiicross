@@ -19,7 +19,7 @@
 
 #include <math.h>
 #include "os_types.h"
-
+#include <machine/endian.h>
 
 #ifndef _V_IFDEFJAIL_H_
 #  define _V_IFDEFJAIL_H_
@@ -37,22 +37,8 @@
 #  define M_PI (3.1415926536f)
 #endif
 
-#ifdef _WIN32
-#  include <malloc.h>
-#  define rint(x)   (floor((x)+0.5f)) 
-#  define NO_FLOAT_MATH_LIB
-#  define FAST_HYPOT(a, b) sqrt((a)*(a) + (b)*(b))
-#  define LITTLE_ENDIAN 1
-#  define BYTE_ORDER LITTLE_ENDIAN
-#elif GEKKO
-#  define BIG_ENDIAN 2
-#  define BYTE_ORDER BIG_ENDIAN
-#elif GAMECUBE
-#  define BIG_ENDIAN 2
-#  define BYTE_ORDER BIG_ENDIAN
-#else
-#  define LITTLE_ENDIAN 1
-#  define BYTE_ORDER LITTLE_ENDIAN
+#ifndef LITTLE_ENDIAN
+#define LITTLE_ENDIAN 0
 #endif
 
 #ifdef HAVE_ALLOCA_H

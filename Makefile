@@ -9,6 +9,8 @@ endif
 
 include $(DEVKITPPC)/wii_rules
 
+
+
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
@@ -102,6 +104,7 @@ $(BUILD):
 clean:
 	@echo clean ...
 	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol
+	$(MAKE) -C tremor clean
 
 #---------------------------------------------------------------------------------
 run:
@@ -169,3 +172,9 @@ $(OUTPUT).elf: $(OFILES)
 #---------------------------------------------------------------------------------
 endif
 #---------------------------------------------------------------------------------
+
+
+# tremor sub-project
+FORCE: ;
+tremor/tremorlib.a: FORCE
+	$(MAKE) -C tremor/ tremor.a
