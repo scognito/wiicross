@@ -21,7 +21,6 @@ void initStorage(){
 
 	if (dir == NULL) {
 		mkdir(DIR_ROOT "res", S_ISVTX);
-			breakpoint("can't create res directory", errno);
 	}
 	else
 		closedir(dir);
