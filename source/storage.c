@@ -110,8 +110,6 @@ void saveCurrentLevel(){
 }
 
 int readThemesDir(){
-	return 0;
-	
 	bool bgFound = false;
 	bool markedFound = false;
 	bool filledFound = false;
@@ -163,7 +161,7 @@ int readThemesDir(){
 // FIXME: Swap occurances of sprintf for snprintf for safety.
 			// we found first (supposed) theme dir
 			sprintf(dirname, DIR_ROOT "res/themes/%s", pent->d_name);
-			themeDir = diropen (dirname);
+			themeDir = opendir(dirname);
 			
 			if(themeDir == NULL){
 				//breakpoint("Unable to open the THEME directory.\n", errno);
