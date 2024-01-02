@@ -108,33 +108,32 @@ void playOggMusic(){
 }
 
 int loadCustomSongs(){
-/*
+
 	struct stat st;
 	char filename[MAXNAMLEN];
 	
-	DIR_ITER* dir;
-	dir = diropen (DIR_ROOT "res/music");
+	struct dirent* pent;
+	DIR* dir;
+	dir = opendir(DIR_ROOT "res/music");
 	
 	int i = 0;
 	
 	if(dir == NULL){
 		return -1;
 	}
-	
-	while(dirnext(dir, filename, &st) == 0){
-	
-		if((strlen(filename) > 2) && (st.st_mode == 33206)){
+	while((pent=readdir(dir)) != NULL) {
+		stat(pent->d_name, &st);
+		if((strlen(pent->d_name) > 2) && (st.st_mode == 33206)){
 			if(checkOggExt(filename)){
-				strcpy(song.songsArray[i], filename);
+				strlcpy(song.songsArray[i], filename, 256);
 				i++;
 			}
 		}
 	}
 	
-	dirclose(dir);
+	closedir(dir);
 	
-	return i;*/
-	return 0;
+	return i;
 }
 
 void playClick(){
@@ -172,7 +171,7 @@ void swap(int a, int b){
 
 	char temp[256];
 	
-	sprintf(temp, song.songsArray[a]);
-	sprintf(song.songsArray[a], song.songsArray[b]);
-	sprintf(song.songsArray[b], temp);
+	snprintf(temp, 256, song.songsArray[a]);
+	snprintf(song.songsArray[a], 256, song.songsArray[b]);
+	snprintf(song.songsArray[b], 256, temp);
 }
