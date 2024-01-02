@@ -10,7 +10,7 @@ extern s_sprite arrowR;
 extern s_sprite arrowL;
 extern int currentPage;
 
-int px, py;
+extern int px, py;
 char timeStr[20];
 char pageStr[10];
 

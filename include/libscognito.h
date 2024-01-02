@@ -24,8 +24,8 @@
 extern GXRModeObj *vmode;
 extern u32 *xfb[2];
 extern int whichfb;
-bool systemReset;
-bool systemPowerOff;
+extern bool systemReset;
+extern bool systemPowerOff;
 
 typedef struct{
 

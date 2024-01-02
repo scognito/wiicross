@@ -7,13 +7,73 @@ s_option options;
 s_matrix matrix;
 s_time timeElapsed;
 s_event event;
+///
+s_background splash_sco;
+s_background splash_dd;
+s_background bg_titlescreen;
+s_background bg_titlescreen_xmas;
+s_background creditscreen;
+s_background bg;
+s_background bg1;
+s_background bg_options;
+s_background bg_pause;
+s_background bg_creditScreen;
+s_background bg_tut1;
+s_background bg_tut2;
+s_background bg_tut3;
+s_background bg_tut4;
+s_background bg_tut5;
 
-//extern int leveldata[1][ROWLEN*ROWLEN];
-extern s_sprite squareCursor;
-extern s_sprite errorMsg;
-extern s_sprite pointer;
-//extern s_sprite needhelp;
-//extern s_sprite levelComplete;
+s_sprite fontNumber;
+s_sprite font;
+s_sprite tileFilled;
+s_sprite tileMarked;
+s_sprite errorMsg;
+s_sprite squareCursor;
+s_sprite gameComplete;
+s_sprite levelComplete;
+s_sprite preview;
+s_sprite arrowL;
+s_sprite arrowR;
+s_sprite modeplay;
+/*
+s_sprite button_exit;
+s_sprite button_credits;
+s_sprite button_options;
+s_sprite button_start;
+s_sprite button_resume;
+s_sprite button_titlescreen;
+*/
+s_sprite button_yes;
+s_sprite button_no;
+s_sprite button_cancel;
+s_sprite needhelp;
+s_sprite controllertype;
+s_sprite musictype;
+s_sprite themetype;
+s_sprite pointer;
+s_sprite opt;
+s_sprite back;
+s_sprite button_soce;
+s_sprite eyes_ts;
+s_sprite eyes_os;
+s_sprite savegame;
+s_sprite font_clock;
+s_sprite msg_outoftime;
+s_sprite button_rote;
+s_sprite cursor_hand;
+s_sprite minitile;
+s_sprite timer;
+s_sprite help;
+s_sprite imageHack;
+///
+bool pointerVisible;
+///
+WPADData wpaddate[SAMP_BUFS];
+WPADData *wpads[4];
+///
+s_song song;
+///
 
 bool lastState;
 int sCursorX = 0;

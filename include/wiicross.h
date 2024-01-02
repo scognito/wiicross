@@ -164,8 +164,8 @@ typedef struct{
 	int currentSong;
 } s_song;
 
-WPADData wpaddata[SAMP_BUFS];
-WPADData *wpads[4];
+extern WPADData wpaddata[SAMP_BUFS];
+extern WPADData *wpads[4];
 
 extern s_background splash_sco;
 extern s_background splash_kenney;
@@ -181,7 +181,7 @@ extern MODPlay mod_track;
 
 extern s_game game;
 extern s_theme theme;
-s_song song;
+extern s_song song;
 
 extern char sscc[10];
 extern int ssc;

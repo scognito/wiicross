@@ -4,6 +4,7 @@
 #include <aesndlib.h>
 
 extern s_option options;
+MODPlay mod_track;
 
 void initSound(){
 

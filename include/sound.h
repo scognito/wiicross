@@ -12,7 +12,7 @@
 #include "snd_error_raw.h"
 #include "snd_bloop_raw.h"
 
-MODPlay mod_track;
+extern MODPlay mod_track;
 
 void initSound();
 void playDefaultLevelMusic();
