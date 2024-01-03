@@ -1,7 +1,10 @@
 #include "../include/wiicross.h"
 #include "sound.h"
+#include <asndlib.h>
+#include <aesndlib.h>
 
 extern s_option options;
+MODPlay mod_track;
 
 void initSound(){
 
@@ -74,7 +77,7 @@ void playLevelCleared(){
 	#endif
 	
 	PlayOgg(mem_open((char*)snd_levelcleared_ogg, snd_levelcleared_ogg_size), 0, OGG_ONE_TIME);
-	//SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_levelcleared_raw, snd_click_raw_size, 255, 255, NULL);
+	SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_levelcleared_raw, snd_click_raw_size, 255, 255, NULL);
 }
 
 void playOggMusic(){
@@ -83,7 +86,7 @@ void playOggMusic(){
 	return;
 	#endif
 	
-	#ifndef MAKE_WII
+	#ifndef HW_RVL
 	return;
 	#endif
 	
@@ -108,28 +111,28 @@ void playOggMusic(){
 int loadCustomSongs(){
 
 	struct stat st;
-	char filename[MAXPATHLEN];
+	char filename[MAXNAMLEN];
 	
-	DIR_ITER* dir;
-	dir = diropen (DIR_ROOT "res/music");
+	struct dirent* pent;
+	DIR* dir;
+	dir = opendir(DIR_ROOT "res/music");
 	
 	int i = 0;
 	
 	if(dir == NULL){
 		return -1;
 	}
-	
-	while(dirnext(dir, filename, &st) == 0){
-	
-		if((strlen(filename) > 2) && (st.st_mode == 33206)){
+	while((pent=readdir(dir)) != NULL) {
+		stat(pent->d_name, &st);
+		if((strlen(pent->d_name) > 2) && (st.st_mode == 33206)){
 			if(checkOggExt(filename)){
-				strcpy(song.songsArray[i], filename);
+				strlcpy(song.songsArray[i], filename, 256);
 				i++;
 			}
 		}
 	}
 	
-	dirclose(dir);
+	closedir(dir);
 	
 	return i;
 }
@@ -143,7 +146,6 @@ void playError(){
 }
 
 void playBloop(){
-	//SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_error_raw, snd_click_raw_size, 255, 255, NULL);
 	SND_SetVoice(SND_GetFirstUnusedVoice(), VOICE_MONO_8BIT, 8000, 0, (char*)snd_bloop_raw, snd_bloop_raw_size, 255, 255, NULL);
 }
 
@@ -170,7 +172,7 @@ void swap(int a, int b){
 
 	char temp[256];
 	
-	sprintf(temp, song.songsArray[a]);
-	sprintf(song.songsArray[a], song.songsArray[b]);
-	sprintf(song.songsArray[b], temp);
+	snprintf(temp, 256, song.songsArray[a]);
+	snprintf(song.songsArray[a], 256, song.songsArray[b]);
+	snprintf(song.songsArray[b], 256, temp);
 }

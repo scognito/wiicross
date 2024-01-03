@@ -2,6 +2,11 @@
 #include "../include/graphics.h"
 #include "../include/pauseScreen.h"
 
+#ifdef HW_DOL
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#endif
+
 bool exitPS;
 int cOptionX;
 int cOptionY;
@@ -32,7 +37,7 @@ void pauseScreen(){
 		drawSprite(button_rote);
 		
 		updateWiimote();
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 			drawSprite(cursor_hand);
 		#endif
 		
@@ -50,7 +55,7 @@ void checkInputPS(){
 	PAD_ScanPads();
 	int buttonsDown = PAD_ButtonsDown(0);
 	
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	//POINTING
 	int px, py;
 
@@ -83,7 +88,7 @@ void checkInputPS(){
 	#endif
 	
 	if((buttonsDown & PAD_BUTTON_DOWN)
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	||
 	(wpads[0]->btns_d & WPAD_BUTTON_LEFT)
 	#endif
@@ -92,7 +97,7 @@ void checkInputPS(){
 	}
 	
 	else if((buttonsDown & PAD_BUTTON_UP)
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	||
 	(wpads[0]->btns_d & WPAD_BUTTON_RIGHT)
 	#endif
@@ -101,7 +106,7 @@ void checkInputPS(){
 	}
 	
 	else if( ((buttonsDown & PAD_BUTTON_RIGHT))
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	||
 	(wpads[0]->btns_d & WPAD_BUTTON_DOWN)
 	#endif
@@ -110,7 +115,7 @@ void checkInputPS(){
 	}
 	
 	else if((buttonsDown & PAD_BUTTON_LEFT)
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	||
 	(wpads[0]->btns_d & WPAD_BUTTON_UP)
 	#endif
@@ -119,7 +124,7 @@ void checkInputPS(){
 	}
 	
 	else if((buttonsDown & PAD_BUTTON_START) // metti R per test
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	|| (wpads[0]->btns_d & WPAD_BUTTON_HOME)
 	#endif
 	){
@@ -127,7 +132,7 @@ void checkInputPS(){
 	}
 	
 	else if((buttonsDown & PAD_BUTTON_A)
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	||
 	((wpads[0]->btns_d & WPAD_BUTTON_1) || (wpads[0]->btns_d & WPAD_BUTTON_2) 
 	  || ((wpads[0]->btns_d & WPAD_BUTTON_A) && ( px >= 80 && py >= 335 && px <= 548 && py <= 442)))
@@ -241,7 +246,7 @@ int askSaveGame(){
 			buttonsDown = PAD_ButtonsDown(0);
 			
 			if( ((buttonsDown & PAD_BUTTON_A || buttonsDown & PAD_BUTTON_START))
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				||
 				((wpads[0]->btns_d & WPAD_BUTTON_A) || (wpads[0]->btns_d & WPAD_BUTTON_1) || (wpads[0]->btns_d & WPAD_BUTTON_2))
 				#endif
@@ -250,7 +255,7 @@ int askSaveGame(){
 			}
 			
 			else if( (((buttonsDown & PAD_BUTTON_RIGHT))
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				||
 				((wpads[0]->btns_d & WPAD_BUTTON_DOWN))
 				#endif
@@ -261,7 +266,7 @@ int askSaveGame(){
 			}
 			
 			else if( (((buttonsDown & PAD_BUTTON_LEFT))
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				||
 				((wpads[0]->btns_d & WPAD_BUTTON_UP))
 				#endif
@@ -272,7 +277,7 @@ int askSaveGame(){
 					selection = 2;
 			}
 
-			#ifdef MAKE_WII
+			#ifdef HW_RVL
 			//POINTER
 			if(px > button_yes.x && px < button_yes.x + button_yes.w && py > button_yes.y && py < button_yes.y + button_yes.h){
 				cursorX = button_yes.x;
@@ -357,3 +362,6 @@ int askSaveGame(){
 	
 	return selection;
 }
+#ifdef HW_DOL
+#pragma GCC diagnostic pop
+#endif

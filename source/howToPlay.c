@@ -46,7 +46,7 @@ void howToPlayScreen(){
 			drawSprite(arrowL);
 		
 		//drawSprite(back);
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		drawSprite(cursor_hand);
 		#endif
 		
@@ -69,7 +69,7 @@ void checkInput_HTP(){
 	int buttonsDown = PAD_ButtonsDown(0);
 	
 	//POINTING
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	int px, py;
 	
 	px = cursor_hand.x;
@@ -88,7 +88,7 @@ void checkInput_HTP(){
 	#endif
 	
 	if((buttonsDown & PAD_BUTTON_RIGHT) || (buttonsDown & PAD_BUTTON_A)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		((wpads[0]->btns_d & WPAD_BUTTON_RIGHT) || (wpads[0]->btns_d & WPAD_BUTTON_DOWN))
 		#endif
@@ -102,7 +102,7 @@ void checkInput_HTP(){
 	}
 	
 	if((buttonsDown & PAD_BUTTON_LEFT) || (buttonsDown & PAD_BUTTON_B)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		((wpads[0]->btns_d & WPAD_BUTTON_LEFT) || (wpads[0]->btns_d & WPAD_BUTTON_UP))
 		#endif
@@ -114,7 +114,7 @@ void checkInput_HTP(){
 		}
 	}
 	
-	#ifdef MAKE_WII	
+	#ifdef HW_RVL	
 	if(wpads[0]->btns_d & WPAD_BUTTON_A){
 		if(py >= arrowR.y && py <= arrowR.y + arrowR.h && px >= arrowR.x && px <= arrowR.x + arrowR.w){
 			if(currentScene < 5)

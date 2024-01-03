@@ -1,6 +1,7 @@
 #include "../include/libscognito.h"
 
 GXRModeObj *vmode;
+u32 fbsize;
 u32 *xfb[2] = { NULL, NULL };
 int whichfb = 0;
 bool systemReset = false;
@@ -80,11 +81,12 @@ void initWii() {
 
 	VIDEO_Init();
 	PAD_Init();
-	#ifdef MAKE_WII
+	#ifndef HW_DOL
 	WPAD_Init();
 	#endif
 	
 	vmode = VIDEO_GetPreferredMode(NULL);
+	fbsize = VIDEO_GetFrameBufferSize(vmode);
 
 	xfb[0] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(vmode));
 	xfb[1] = MEM_K0_TO_K1 (SYS_AllocateFramebuffer (vmode));
@@ -103,11 +105,11 @@ void initWii() {
 	if(vmode->viTVMode&VI_NON_INTERLACE)
 		VIDEO_WaitVSync();
 	
-	#ifdef MAKE_WII
+#ifndef HW_DOL
 	WPAD_SetVRes(WPAD_CHAN_0, vmode->fbWidth, vmode->xfbHeight);
 	WPAD_SetDataFormat(WPAD_CHAN_0, WPAD_FMT_BTNS_ACC_IR);
 	WPAD_SetIdleTimeout(60);
-	#endif
+#endif
 	
 	// random stuff
 	srand(time(NULL));
@@ -279,7 +281,7 @@ void deleteBackground(s_background *bg){
 
 u32 createSprite(s_sprite *sp, const u8 *bmpfile, char* path, s32 x, s32 y, u32 numFrames, u8 type, bool useDevice){
 	
-	u32 width, height, tmp;
+	u32 width = 0, height = 0, tmp = 0;
 	
 	if (type == FMT_BMP){
 	
@@ -503,7 +505,7 @@ void resetSystem(){
 
 void exitGame(){
 
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 		exit(0);
 	#else
 		void (*PSOreload)() = (void(*)())0x80001800;

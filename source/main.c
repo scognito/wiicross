@@ -7,13 +7,73 @@ s_option options;
 s_matrix matrix;
 s_time timeElapsed;
 s_event event;
+///
+s_background splash_sco;
+s_background splash_dd;
+s_background bg_titlescreen;
+s_background bg_titlescreen_xmas;
+s_background creditscreen;
+s_background bg;
+s_background bg1;
+s_background bg_options;
+s_background bg_pause;
+s_background bg_creditScreen;
+s_background bg_tut1;
+s_background bg_tut2;
+s_background bg_tut3;
+s_background bg_tut4;
+s_background bg_tut5;
 
-//extern int leveldata[1][ROWLEN*ROWLEN];
-extern s_sprite squareCursor;
-extern s_sprite errorMsg;
-extern s_sprite pointer;
-//extern s_sprite needhelp;
-//extern s_sprite levelComplete;
+s_sprite fontNumber;
+s_sprite font;
+s_sprite tileFilled;
+s_sprite tileMarked;
+s_sprite errorMsg;
+s_sprite squareCursor;
+s_sprite gameComplete;
+s_sprite levelComplete;
+s_sprite preview;
+s_sprite arrowL;
+s_sprite arrowR;
+s_sprite modeplay;
+/*
+s_sprite button_exit;
+s_sprite button_credits;
+s_sprite button_options;
+s_sprite button_start;
+s_sprite button_resume;
+s_sprite button_titlescreen;
+*/
+s_sprite button_yes;
+s_sprite button_no;
+s_sprite button_cancel;
+s_sprite needhelp;
+s_sprite controllertype;
+s_sprite musictype;
+s_sprite themetype;
+s_sprite pointer;
+s_sprite opt;
+s_sprite back;
+s_sprite button_soce;
+s_sprite eyes_ts;
+s_sprite eyes_os;
+s_sprite savegame;
+s_sprite font_clock;
+s_sprite msg_outoftime;
+s_sprite button_rote;
+s_sprite cursor_hand;
+s_sprite minitile;
+s_sprite timer;
+s_sprite help;
+s_sprite imageHack;
+///
+bool pointerVisible;
+///
+WPADData wpaddate[SAMP_BUFS];
+WPADData *wpads[4];
+///
+s_song song;
+///
 
 bool lastState;
 int sCursorX = 0;
@@ -22,7 +82,7 @@ bool newMove;
 int currentLevel;
 bool backToMenu = false;
 int firstState = STATE_NONE;
-int currentPage = 0;
+unsigned int currentPage = 0;
 extern int ox;
 extern int oy;
 
@@ -49,7 +109,10 @@ int main() {
 	else if(systemPowerOff)
 		SYS_ResetSystem(SYS_POWEROFF, 0, 0);
 	*/
-	
+	SYS_SetResetCallback(resetSystem);
+#ifdef HW_RVL
+	SYS_SetPowerCallback(poweroffSystem);
+#endif
 	while(1){
 
 		currentLevel = levelSelect();
@@ -90,7 +153,7 @@ int main() {
 				}
 			}
 			
-			#ifdef MAKE_WII
+			#ifdef HW_RVL
 			if(systemReset)
 				SYS_ResetSystem(SYS_RETURNTOMENU, 0, 0);
 			else if(systemPowerOff)
@@ -170,7 +233,7 @@ void initVars(){
 	
 	newMove = true;
 	
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	options.padType = PAD_WII;
 	#else
 	options.padType = PAD_NGC;
@@ -391,13 +454,12 @@ void checkInput(){
 	int buttonsHeld = PAD_ButtonsHeld(0);
 	int buttonsUp = PAD_ButtonsUp(0);
 	int px, py;
-	bool firstMove = false;
 	
 	px = pointer.x + pointer.w;
 	py = pointer.y + pointer.h;
 	
 	if( ((((buttonsDown & PAD_BUTTON_RIGHT) || (buttonsHeld & PAD_BUTTON_RIGHT && game.heldFrames >= HELD_FRAMES_MAX))&& options.padType == PAD_NGC)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(((wpads[0]->btns_d & WPAD_BUTTON_DOWN) || (wpads[0]->btns_h & WPAD_BUTTON_DOWN && game.heldFrames >= HELD_FRAMES_MAX)) && options.padType == PAD_WII_S)
 		#endif
@@ -408,7 +470,7 @@ void checkInput(){
 		newMove = true;
 	}
 	else if(((((buttonsDown & PAD_BUTTON_LEFT) || (buttonsHeld & PAD_BUTTON_LEFT && game.heldFrames >= HELD_FRAMES_MAX)) && options.padType == PAD_NGC)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(((wpads[0]->btns_d & WPAD_BUTTON_UP) || (wpads[0]->btns_h & WPAD_BUTTON_UP && game.heldFrames >= HELD_FRAMES_MAX))  && options.padType == PAD_WII_S)
 		#endif
@@ -419,7 +481,7 @@ void checkInput(){
 		newMove = true;
 	}
 	else if(((((buttonsDown & PAD_BUTTON_UP) || (buttonsHeld & PAD_BUTTON_UP && game.heldFrames >= HELD_FRAMES_MAX)) && options.padType == PAD_NGC)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(((wpads[0]->btns_d & WPAD_BUTTON_RIGHT) || (wpads[0]->btns_h & WPAD_BUTTON_RIGHT && game.heldFrames >= HELD_FRAMES_MAX))  && options.padType == PAD_WII_S)
 		#endif
@@ -430,7 +492,7 @@ void checkInput(){
 		newMove = true;
 	}
 	else if(((((buttonsDown & PAD_BUTTON_DOWN) || (buttonsHeld & PAD_BUTTON_DOWN && game.heldFrames >= HELD_FRAMES_MAX)) && options.padType == PAD_NGC)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(((wpads[0]->btns_d & WPAD_BUTTON_LEFT)  || (wpads[0]->btns_h & WPAD_BUTTON_LEFT && game.heldFrames >= HELD_FRAMES_MAX)) && options.padType == PAD_WII_S)
 		#endif
@@ -442,7 +504,7 @@ void checkInput(){
 	}
 		
 	else if((buttonsDown & PAD_BUTTON_START)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		|| (wpads[0]->btns_d & WPAD_BUTTON_HOME)
 		#endif
 	){
@@ -450,17 +512,11 @@ void checkInput(){
 	}
 	
 	else if( ( ((buttonsDown & PAD_BUTTON_A)||(buttonsHeld & PAD_BUTTON_A)) && options.padType == PAD_NGC)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(( ((wpads[0]->btns_d & WPAD_BUTTON_B) && wpads[0]->ir.valid) || ((wpads[0]->btns_h & WPAD_BUTTON_B) && wpads[0]->ir.valid) || (wpads[0]->btns_d & WPAD_BUTTON_2) || (wpads[0]->btns_h & WPAD_BUTTON_2) )&& options.padType != PAD_NGC)
 		#endif
 	){
-		//NEW
-		//if(firstState = STATE_NONE){
-		//if(firstMove = false){
-		//	firstMove = true;
-		//}
-		//ENDNEW
 		
 		if(newMove){
 			checkTile(sCursorX, sCursorY, ACTION_DRAW);
@@ -469,7 +525,7 @@ void checkInput(){
 	}
 	
 	else if( ((buttonsHeld & PAD_BUTTON_B) && options.padType == PAD_NGC)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(((wpads[0]->btns_h & WPAD_BUTTON_1) || (wpads[0]->btns_h & WPAD_BUTTON_A)) && options.padType != PAD_NGC)
 		#endif
@@ -483,19 +539,17 @@ void checkInput(){
 	else if( !(buttonsDown & PAD_BUTTON_A) && !(buttonsDown & PAD_BUTTON_B) && options.padType == PAD_NGC){
 		newMove = true;
 		firstState = STATE_NONE;
-		firstMove = false;
 	}
 	
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	else if( !(wpads[0]->btns_d & WPAD_BUTTON_A) && !(wpads[0]->btns_d & WPAD_BUTTON_B) && options.padType != PAD_NGC){
 		newMove = true;
 		firstState = STATE_NONE;
-		firstMove = false;
 	}
 	#endif
 	
 	if( ((buttonsDown & PAD_TRIGGER_L) && options.padType == PAD_NGC)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		((wpads[0]->btns_d & WPAD_BUTTON_MINUS) && options.padType != PAD_NGC)
 		#endif
@@ -526,7 +580,7 @@ void checkInput(){
 			game.heldFrames = 0;
 		}
 	}
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	else if(options.padType == PAD_WII_S){
 		if(wpads[0]->btns_h & (WPAD_BUTTON_UP | WPAD_BUTTON_DOWN | WPAD_BUTTON_LEFT | WPAD_BUTTON_RIGHT)){
 			game.heldFrames++;
@@ -802,7 +856,7 @@ void performLevelComplete(){
 
 void updateWiimote(){
 	
-	#ifdef MAKE_WII
+#ifndef HW_DOL
 	
 	WPAD_ReadPending(WPAD_CHAN_0, NULL);
 	wpads[0] = WPAD_Data(WPAD_CHAN_0);

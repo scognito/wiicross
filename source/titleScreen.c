@@ -66,7 +66,7 @@ void titleScreen(){
 		drawSprite(eyes_ts);
 		//if(options.padType == PAD_WII)
 		updateWiimote();
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		drawSprite(cursor_hand);
 		#endif
 		
@@ -88,7 +88,7 @@ void checkInputTS(){
 	//int buttonsHeld = PAD_ButtonsHeld(0);
 	
 	//POINTING
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	int px, py;
 		
 	//px = pointer.x + pointer.w;
@@ -135,7 +135,7 @@ void checkInputTS(){
 	
 	if(!modeplayVisible){
 		if( (buttonsDown & PAD_BUTTON_RIGHT)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		((wpads[0]->btns_d & WPAD_BUTTON_DOWN))
 		#endif
@@ -145,7 +145,7 @@ void checkInputTS(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_LEFT)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		((wpads[0]->btns_d & WPAD_BUTTON_UP))
 		#endif
@@ -157,7 +157,7 @@ void checkInputTS(){
 	}
 	else{
 		if( (buttonsDown & PAD_BUTTON_DOWN)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		((wpads[0]->btns_d & WPAD_BUTTON_LEFT))
 		#endif
@@ -167,7 +167,7 @@ void checkInputTS(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_UP)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		((wpads[0]->btns_d & WPAD_BUTTON_RIGHT))
 		#endif
@@ -180,7 +180,7 @@ void checkInputTS(){
 	
 	
 	if((buttonsDown & PAD_BUTTON_A || buttonsDown & PAD_BUTTON_START)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_2)
 		||
@@ -222,7 +222,7 @@ void checkInputTS(){
 	}
 	
 	else if( ((buttonsDown & PAD_BUTTON_B) && modeplayVisible)
-			#ifdef MAKE_WII
+			#ifdef HW_RVL
 			||
 			((wpads[0]->btns_d & WPAD_BUTTON_1) || (wpads[0]->btns_d & WPAD_BUTTON_B))
 			#endif
@@ -230,7 +230,7 @@ void checkInputTS(){
 		modeplayVisible = false;
 	}
 	
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	if(px >= 256 && px <= 392 && py >= 72 && py <= 148 && (wpads[0]->btns_d & WPAD_BUTTON_A)){
 		frames = 181; // make the eyes close when you click on them
 	}

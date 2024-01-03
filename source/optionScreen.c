@@ -59,7 +59,7 @@ void optionScreen(){
 		drawSprite(opt);
 		drawSprite(controllertype);
 		drawSprite(musictype);
-		#ifndef MAKE_WII
+		#ifndef HW_RVL
 		drawSprite(imageHack);
 		#endif
 		drawSprite(themetype);
@@ -69,7 +69,7 @@ void optionScreen(){
 		if(theme.currentTheme != 0)
 			drawSprite(theme.titleArray[theme.currentTheme]);
 		
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 			drawSprite(cursor_hand);
 		#endif
 		
@@ -84,7 +84,7 @@ void optionScreen(){
 
 void checkInput_OS(){
 
-	#ifdef MAKE_WII	
+	#ifdef HW_RVL	
 	
 	updateWiimote();
 	
@@ -114,7 +114,7 @@ void checkInput_OS(){
 	int buttonsDown = PAD_ButtonsDown(0);
 	
 	if((buttonsDown & PAD_BUTTON_DOWN)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_LEFT)
 		#endif
@@ -124,7 +124,7 @@ void checkInput_OS(){
 	}
 	
 	else if((buttonsDown & PAD_BUTTON_UP)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_RIGHT)
 		#endif
@@ -135,14 +135,14 @@ void checkInput_OS(){
 	}
 	
 	else if((buttonsDown & PAD_BUTTON_RIGHT)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_DOWN)
 		#endif
 	  ){
 		
 		if(cursorOption == 0){ // controller, can't be changed in gc
-			#ifdef MAKE_WII
+			#ifdef HW_RVL
 			controllertype.frame++;
 			controllertype.frame = controllertype.frame % 3;
 			playBloop();
@@ -151,7 +151,7 @@ void checkInput_OS(){
 		
 		else if (cursorOption == 1){ // audio
 			options.musicType++;
-			#ifdef MAKE_WII
+			#ifdef HW_RVL
 			options.musicType = options.musicType % 3;
 			#else
 			options.musicType = options.musicType % 2;
@@ -173,14 +173,14 @@ void checkInput_OS(){
 	}
 	
 	else if((buttonsDown & PAD_BUTTON_LEFT)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_UP)
 		#endif
 	  ){
 		
 		if(cursorOption == 0){ // controller
-			#ifdef MAKE_WII
+			#ifdef HW_RVL
 			if(controllertype.frame > 0)
 				controllertype.frame--;
 			else
@@ -193,7 +193,7 @@ void checkInput_OS(){
 			
 			options.musicType--;
 			if(options.musicType < 0)
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				options.musicType = 2;
 				#else
 				options.musicType = 1;
@@ -215,14 +215,14 @@ void checkInput_OS(){
 	}
 	
 	else if((buttonsDown & PAD_BUTTON_A)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		((wpads[0]->btns_d & WPAD_BUTTON_1) || (wpads[0]->btns_d & WPAD_BUTTON_2))
 		#endif
 	){
 		
 		if(cursorOption == 0){ // controller
-			#ifdef MAKE_WII
+			#ifdef HW_RVL
 			controllertype.frame++;
 			controllertype.frame = controllertype.frame % 3;
 			playBloop();
@@ -231,7 +231,7 @@ void checkInput_OS(){
 		
 		else if (cursorOption == 1){ // audio
 			options.musicType++;
-			#ifdef MAKE_WII
+			#ifdef HW_RVL
 			options.musicType = options.musicType % 3;
 			#else
 			options.musicType = options.musicType % 2;
@@ -257,7 +257,7 @@ void checkInput_OS(){
 		}
 	}
 	
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	else if(wpads[0]->btns_d & WPAD_BUTTON_A){
 	
 		switch(cursorOption){

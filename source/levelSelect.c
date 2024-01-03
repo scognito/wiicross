@@ -1,5 +1,10 @@
 #include "levelSelect.h"
 
+#ifdef HW_DOL
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#endif
+
 extern s_level leveldata[NUMLEVELS];
 extern s_marker markerH;
 extern s_time timeElapsed;
@@ -8,9 +13,9 @@ extern s_option options;
 extern bool backToMenu;
 extern s_sprite arrowR;
 extern s_sprite arrowL;
-extern int currentPage;
+extern unsigned int currentPage;
 
-int px, py;
+extern int px, py;
 char timeStr[20];
 char pageStr[10];
 
@@ -61,7 +66,7 @@ int levelSelect(){
 	markerH.b = 255;
 	markerH.dirColor = DIR_COLOR_DOWN;
 	
-	int numPages = 0;
+	unsigned int numPages = 0;
 	
 	if (NUMLEVELS > 9)
 		numPages = NUMLEVELS / 9;
@@ -170,7 +175,7 @@ int levelSelect(){
 		buttonsDown = PAD_ButtonsDown(0);
 		
 		if(((buttonsDown & PAD_TRIGGER_R)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_PLUS)
 		#endif
@@ -203,7 +208,7 @@ int levelSelect(){
 			*/
 		
 		if(((buttonsDown & PAD_TRIGGER_L)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_MINUS)
 		#endif
@@ -216,7 +221,7 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_RIGHT)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_DOWN)
 		#endif
@@ -226,7 +231,7 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_LEFT)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_UP)
 		#endif
@@ -238,7 +243,7 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_DOWN)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_LEFT)
 		#endif
@@ -248,7 +253,7 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_UP)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		||
 		(wpads[0]->btns_d & WPAD_BUTTON_RIGHT)
 		#endif
@@ -260,7 +265,7 @@ int levelSelect(){
 		}
 		
 		else if( (buttonsDown & PAD_BUTTON_A)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		|| ((wpads[0]->btns_d & WPAD_BUTTON_1) || (wpads[0]->btns_d & WPAD_BUTTON_2))
 		#endif
 		){
@@ -272,14 +277,14 @@ int levelSelect(){
 		}
 		
 		else if((buttonsDown & PAD_BUTTON_START)
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		|| (wpads[0]->btns_d & WPAD_BUTTON_HOME)
 		#endif
 		){
 			pauseScreen();
 		}
 		
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		else if(wpads[0]->btns_d & WPAD_BUTTON_A){
 		
 			if((px > 545 || px < 92) && !isOT){
@@ -317,7 +322,7 @@ int levelSelect(){
 		// DEBUG
 		//
 		/*
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		if(wpads[0]->btns_d & WPAD_BUTTON_HOME)
 			exit=true;
 		if(buttonsDown & PAD_BUTTON_X)
@@ -343,7 +348,7 @@ int levelSelect(){
 			frames = 0;
 		
 		//drawLevelSelectCursor(startX -2 + (preview.w + xDistance)*posX, startY -2 + (preview.h + yDistance)*posY);
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		drawSprite(cursor_hand);
 		#endif
 		
@@ -374,7 +379,7 @@ int levelSelect(){
 
 bool moveCursorPointer(int* posX, int* posY){
 
-	#ifndef MAKE_WII
+	#ifndef HW_RVL
 		return false;
 	#endif
 	
@@ -426,3 +431,6 @@ bool moveCursorPointer(int* posX, int* posY){
 	
 	return (isOTx && isOTy);
 }
+#ifdef HW_DOL
+#pragma GCC diagnostic pop
+#endif

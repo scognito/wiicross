@@ -25,7 +25,7 @@ THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "oggplayer.h"
-
+#include <gctypes.h>
 #include <gccore.h>
 
 /* OGG control */
@@ -260,11 +260,13 @@ else
 
 int StatusOgg()
 {
+	
 if(ogg_thread_running<=0) return -1;  // Error
 
 if(private_ogg.eof)      return 255; // EOF
 
 if(private_ogg.flag & 128) return 2; // paused
+
 return 1; // running
 }
 

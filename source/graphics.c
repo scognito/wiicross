@@ -15,6 +15,8 @@ int px, py;
 
 extern bool newMove;
 
+extern u32 fbsize;
+
 void initGfx(){
 
 	int spriteError = 0;
@@ -317,7 +319,7 @@ void drawScene(){
 	//printText(20, 20, succa);
 	
 	//if(pointerVisible)
-	#ifdef MAKE_WII
+	#ifdef HW_RVL
 	if(options.padType == PAD_WII)
 		drawSprite(pointer);
 	#endif
@@ -499,15 +501,15 @@ void fadeIn(){
 	int y = 0;
 	int i = 0;
 	int step = 10;
-	
-	u32 *tempXfb = malloc(sizeof(u32)*(640>>1)*480);
+		
+	u32 *tempXfb = malloc(fbsize);
 	//screenshot
-	memcpy(&tempXfb, &xfb[whichfb][0], (640<<1)*480);
+	memcpy(&tempXfb, &xfb[whichfb][0], fbsize);
 
 	for(i=0; i<11; i++){
 		whichfb ^= 1;
 		VIDEO_ClearFrameBuffer (vmode, xfb[whichfb], COLOR_BLACK);	
-		memcpy(&xfb[whichfb][0], &tempXfb, (640<<1)*480);
+		memcpy(&xfb[whichfb][0], &tempXfb, fbsize);
 		
 		for(y=0; y < 48; y++){
 			for(x=0; x < 64; x++){
@@ -536,10 +538,10 @@ void fadeOut(){
 	VIDEO_Flush();
 	VIDEO_WaitVSync();
 
-	u32 *tempXfb = malloc(sizeof(u32)*(640>>1)*480);
+	u32 *tempXfb = malloc(fbsize);
 	//screenshot
-	memcpy(&tempXfb, &xfb[whichfb][0], (640<<1)*480);
-	memcpy(&xfb[whichfb][0], &tempXfb, (640<<1)*480);
+	memcpy(&tempXfb, &xfb[whichfb][0], fbsize);
+	memcpy(&xfb[whichfb][0], &tempXfb, fbsize);
 	
 	VIDEO_Flush();
 	VIDEO_WaitVSync();
@@ -548,7 +550,7 @@ void fadeOut(){
 	
 		whichfb ^= 1;
 		VIDEO_ClearFrameBuffer (vmode, xfb[whichfb], COLOR_BLACK);	
-		memcpy(&xfb[whichfb][0], &tempXfb, (640<<1)*480);
+		memcpy(&xfb[whichfb][0], &tempXfb, fbsize);
 		
 		for(y=0; y < 48; y++){
 			for(x=0; x < 64; x++){
@@ -559,12 +561,10 @@ void fadeOut(){
 		VIDEO_SetNextFramebuffer(xfb[whichfb]);
 		VIDEO_Flush();
 		VIDEO_WaitVSync();
-		//sleepSeconds(1);
 		sleepMSeconds(20);
 	}
 	
-	//breakpoint("pre free", 0);
-	//free(&tempXfb);
+	free(tempXfb);
 }
 
 void showLevelComplete(){	
@@ -730,7 +730,7 @@ bool helpNeeded(int whichLevel){
 			buttonsDown = PAD_ButtonsDown(0);
 			
 			if( ((buttonsDown & PAD_BUTTON_A || buttonsDown & PAD_BUTTON_START))
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				||
 				((wpads[0]->btns_d & WPAD_BUTTON_A) || (wpads[0]->btns_d & WPAD_BUTTON_1) || (wpads[0]->btns_d & WPAD_BUTTON_2))
 				#endif
@@ -741,7 +741,7 @@ bool helpNeeded(int whichLevel){
 			}
 			
 			else if( (((buttonsDown & PAD_BUTTON_RIGHT))
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				||
 				((wpads[0]->btns_d & WPAD_BUTTON_DOWN))
 				#endif
@@ -751,7 +751,7 @@ bool helpNeeded(int whichLevel){
 			}
 			
 			else if( (((buttonsDown & PAD_BUTTON_LEFT))
-				#ifdef MAKE_WII
+				#ifdef HW_RVL
 				||
 				((wpads[0]->btns_d & WPAD_BUTTON_UP))
 				#endif
@@ -847,7 +847,7 @@ bool helpNeeded(int whichLevel){
 		drawSprite(button_no);
 		drawSprite(needhelp);
 		updateWiimote();
-		#ifdef MAKE_WII
+		#ifdef HW_RVL
 		drawSprite(cursor_hand);
 		#endif
 		
